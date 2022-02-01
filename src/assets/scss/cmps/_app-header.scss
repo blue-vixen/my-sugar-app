@@ -1,0 +1,26 @@
+.app-header {
+    background: #c3d6df;
+    section.container {
+        display: flex;
+        align-items: center;
+        .logo {
+            display: flex;
+            align-items: center;
+            img {
+                height: 60px;
+            }
+            flex-grow: 1;
+        }
+        nav {
+            a:not(:last-child) {
+                margin-right: 20px;
+            }
+
+            a:is(.active, .my-active) {
+                color: white;
+            }
+            
+            
+        }
+    }
+}
