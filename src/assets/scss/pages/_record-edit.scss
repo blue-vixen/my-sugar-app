@@ -1,26 +1,25 @@
-.robot-edit {
+.record-edit {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     form {
+        width: 50%;
         margin-top: 40px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 5px;
-        width: 100%;
-
+        gap: 15px;
         > :is(input, select) {
             margin-bottom: 20px;
             padding: 15px 25px;
-            width: 30%;
+            width: 100%;
             // border: none;
             border: 1px solid rgb(60, 60, 60);
             border-radius: 3px;
         }
 
-        button:last-child {
+        button:last-child:not(.MuiButtonBase-root) {
             margin-top: 40px;
             width: 15%;
         }

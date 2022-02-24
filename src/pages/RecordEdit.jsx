@@ -1,19 +1,32 @@
 import React from 'react'
-import { useEffect } from 'react'
-import { useForm } from '../hooks/useForm'
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { DateTimePicker } from '@mui/lab';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
+
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { saveRecord } from '../store/actions/recordActions';
 import { recordService } from '../services/record.service'
 
 
 
 export const RecordEdit = (props) => {
-    const [record, handleChange, setRecord] = useForm(null)
+    const [record, setRecord] = useState(null)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         (async () => {
             try {
+                console.log('here')
                 const recordId = props.match.params.id
                 const record = recordId ? await recordService.getById(recordId) : recordService.getEmptyRecord()
-                setRecord(record)
+                setRecord({ ...record })
             } catch (err) {
                 console.log(err)
             }
@@ -22,28 +35,43 @@ export const RecordEdit = (props) => {
 
     const onSaveRecord = async (ev) => {
         ev.preventDefault()
-        await recordService.save({ ...record })
+        dispatch(saveRecord({ ...record }))
         props.history.push('/')
     }
 
+    const handleChange = event => {
+        const { value, name } = event.target
+        setRecord({ ...record, [name]: value })
+    }
+
+
     if (!record) return <div>Loading...</div>
     return (
-        <div className='record-edit'>
-            <h1>{record._id ? 'Edit' : 'Add'} Record:</h1>
-            <form onSubmit={onSaveRecord}>
-                <label htmlFor="type">Type:
-                    <select onChange={handleChange} value={record.type} name="type" id="type">
-                        <option value="fasting">Fasting</option>
-                        <option value="before meal">Before Meal</option>
-                        <option value="after meal">After Meal</option>
-                    </select>
-                </label>
-                <label htmlFor='level'>Glucose Level:
-                    <input type="number" name='level' id='level' onChange={handleChange} value={record.level} />
-                </label>
-                <button>Save</button>
-            </form>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <div className='record-edit'>
+                <h1>{record.id ? 'Edit' : 'Add'} Record:</h1>
+                <form onSubmit={onSaveRecord}>
+                    <FormControl fullWidth>
+                        <InputLabel id='type'>type</InputLabel>
+                        <Select labelId='type' id='type' value={record.type} label='Type' onChange={handleChange} name='type'>
+                            <MenuItem value='fasting'>Fasting</MenuItem>
+                            <MenuItem value='before meal'>Before Meal</MenuItem>
+                            <MenuItem value='after meal'>After Meal</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <TextField id='level' name='level' label='Glucose Level' variant='outlined' onChange={handleChange} value={record.level} type='number' />
+                    </FormControl>
+                    <DateTimePicker
+                        renderInput={(props) => <TextField fullWidth {...props} />}
+                        label='Measured at:'
+                        value={record.measuredAt}
+                        onChange={handleChange}
+                    />
+                    <Button variant='contained' type='submit'>Save</Button>
 
-        </div>
+                </form>
+            </div >
+        </LocalizationProvider>
     )
 }

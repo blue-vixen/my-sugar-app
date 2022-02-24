@@ -1,5 +1,6 @@
 import { storageService } from "./storage.service";
 import { makeId } from "./util.service";
+import { gDefaultRecords } from './records'
 
 export const recordService = {
     query,
@@ -11,15 +12,7 @@ export const recordService = {
 
 const STORAGE_KEY = 'records'
 
-const gDefaultRecords = [
-    { _id: 'r1', time: 1608439067, type: 'fasting', level: 96 },
-    { _id: 'r2', time: 1608445007, type: 'before meal', level: 108 },
-    { _id: 'r3', time: 1608448607, type: 'after meal', level: 103 },
-    { _id: 'r4', time: 1608462000, type: 'before meal', level: 87 },
-    { _id: 'r5', time: 1608465600, type: 'after meal', level: 108 },
-    { _id: 'r6', time: 1608487200, type: 'before meal', level: 88 },
-    { _id: 'r7', time: 1608490800, type: 'after meal', level: 105 },
-]
+
 
 var gRecords = _loadRecords()
 
@@ -33,12 +26,12 @@ function query(filterBy) {
 }
 
 function getById(id) {
-    const record = gRecords.find(record => record._id === id)
+    const record = gRecords.find(record => record.id === id)
     return Promise.resolve({ ...record })
 }
 
 function remove(id) {
-    const idx = gRecords.findIndex(record => record._id === id)
+    const idx = gRecords.findIndex(record => record.id === id)
     gRecords.splice(idx, 1)
     if (!gRecords.length) gRecords = gDefaultRecords.slice()
     storageService.store(STORAGE_KEY, gRecords)
@@ -46,12 +39,11 @@ function remove(id) {
 }
 
 function save(recordToSave) {
-    if (recordToSave._id) {
-        const idx = gRecords.findIndex(record => record._id === recordToSave._id)
+    if (recordToSave.id) {
+        const idx = gRecords.findIndex(record => record.id === recordToSave.id)
         gRecords.splice(idx, 1, recordToSave)
     } else {
-        recordToSave._id = makeId()
-        recordToSave.time = Date.now()
+        recordToSave.id = makeId()
         gRecords.push(recordToSave)
     }
     storageService.store(STORAGE_KEY, gRecords)
@@ -62,6 +54,7 @@ function getEmptyRecord() {
     return {
         level: 0,
         type: '',
+        measuredAt: new Date().toLocaleString()
     }
 }
 

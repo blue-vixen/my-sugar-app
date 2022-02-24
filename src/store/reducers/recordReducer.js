@@ -10,6 +10,21 @@ export function recordReducer(state = INITIAL_STATE, action) {
                 ...state,
                 records: [...action.records]
             }
+        case 'REMOVE_RECORD':
+            return {
+                ...state,
+                records: state.records.filter(record => record.id !== action.recordId)
+            }
+        case 'ADD_RECORD':
+            return {
+                ...state,
+                records: [...state.records, action.savedRecord]
+            }
+        case 'UPDATE_RECORD':
+            return {
+                ...state,
+                records: state.records.map(record => record.id === action.savedRecord.id ? action.savedRecord : record)
+            }
         case 'SET_FILTER_BY':
             return {
                 ...state,
