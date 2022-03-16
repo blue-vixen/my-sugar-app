@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/my-sugar-app/static/css/main.e3016f8d.css",
-    "main.js": "/my-sugar-app/static/js/main.48bf47e6.js",
+    "main.css": "/my-sugar-app/static/css/main.c4664e65.css",
+    "main.js": "/my-sugar-app/static/js/main.7002984d.js",
     "static/js/787.9d11c86d.chunk.js": "/my-sugar-app/static/js/787.9d11c86d.chunk.js",
     "static/media/logo2.svg": "/my-sugar-app/static/media/logo2.536004968904c112acbd88d335260392.svg",
     "index.html": "/my-sugar-app/index.html",
-    "main.e3016f8d.css.map": "/my-sugar-app/static/css/main.e3016f8d.css.map",
-    "main.48bf47e6.js.map": "/my-sugar-app/static/js/main.48bf47e6.js.map",
+    "main.c4664e65.css.map": "/my-sugar-app/static/css/main.c4664e65.css.map",
+    "main.7002984d.js.map": "/my-sugar-app/static/js/main.7002984d.js.map",
     "787.9d11c86d.chunk.js.map": "/my-sugar-app/static/js/787.9d11c86d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e3016f8d.css",
-    "static/js/main.48bf47e6.js"
+    "static/css/main.c4664e65.css",
+    "static/js/main.7002984d.js"
   ]
 }
