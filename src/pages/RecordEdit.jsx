@@ -10,7 +10,7 @@ import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { saveRecord } from '../store/actions/recordActions';
 import { recordService } from '../services/record.service'
 
@@ -18,6 +18,7 @@ import { recordService } from '../services/record.service'
 
 export const RecordEdit = (props) => {
     const [record, setRecord] = useState(null)
+    const { currentUser } = useSelector(state => state.userModule)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -35,7 +36,7 @@ export const RecordEdit = (props) => {
 
     const onSaveRecord = async (ev) => {
         ev.preventDefault()
-        dispatch(saveRecord({ ...record }))
+        dispatch(saveRecord({ ...record }, currentUser.id))
         props.history.push('/')
     }
 

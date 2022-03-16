@@ -18,7 +18,7 @@ export function recordReducer(state = INITIAL_STATE, action) {
         case 'ADD_RECORD':
             return {
                 ...state,
-                records: [...state.records, action.savedRecord]
+                records: [...state.records]
             }
         case 'UPDATE_RECORD':
             return {

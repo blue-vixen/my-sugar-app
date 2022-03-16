@@ -1,3 +1,4 @@
+
 export const gDefaultRecords = [
     { id: 'r1', measuredAt: 1608439067 * 1000, type: 'fasting', level: 96 },
     { id: 'r2', measuredAt: 1608445007 * 1000, type: 'before meal', level: 108 },

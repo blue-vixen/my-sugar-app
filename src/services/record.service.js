@@ -1,4 +1,5 @@
 import { storageService } from "./storage.service";
+import { addRecord, getRecords } from "../firebase/firebase.utils";
 import { makeId } from "./util.service";
 import { gDefaultRecords } from './records'
 
@@ -17,6 +18,8 @@ const STORAGE_KEY = 'records'
 var gRecords = _loadRecords()
 
 function query(filterBy) {
+    let recordsFromFirebase = getRecords()
+    console.log(recordsFromFirebase)
     let recordsToReturn = gRecords
     if (filterBy) {
         let { type } = filterBy
@@ -38,17 +41,25 @@ function remove(id) {
     return Promise.resolve()
 }
 
-function save(recordToSave) {
-    if (recordToSave.id) {
-        const idx = gRecords.findIndex(record => record.id === recordToSave.id)
-        gRecords.splice(idx, 1, recordToSave)
-    } else {
-        recordToSave.id = makeId()
-        gRecords.push(recordToSave)
+async function save(recordToSave, userId) {
+    if (!recordToSave.id) {
+        const addedRecord = await addRecord({ ...recordToSave, userId })
+        console.log(addedRecord)
+        return Promise.resolve(addedRecord)
     }
-    storageService.store(STORAGE_KEY, gRecords)
-    return Promise.resolve(recordToSave)
 }
+
+// function save(recordToSave) {
+//     if (recordToSave.id) {
+//         const idx = gRecords.findIndex(record => record.id === recordToSave.id)
+//         gRecords.splice(idx, 1, recordToSave)
+//     } else {
+//         recordToSave.id = makeId()
+//         gRecords.push(recordToSave)
+//     }
+//     storageService.store(STORAGE_KEY, gRecords)
+//     return Promise.resolve(recordToSave)
+// }
 
 function getEmptyRecord() {
     return {
@@ -62,6 +73,6 @@ function getEmptyRecord() {
 function _loadRecords() {
     let records = storageService.load(STORAGE_KEY)
     if (!records || !records.length) records = gDefaultRecords
-    storageService.store(STORAGE_KEY, records)
+    // storageService.store(STORAGE_KEY, records)
     return records
 }

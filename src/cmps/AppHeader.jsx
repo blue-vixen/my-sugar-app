@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { auth } from '../firebase/firebase.utils'
 
 export function _AppHeader({ currentUser }) {
-
-    console.log(currentUser)
     return (
         <header className='app-header'>
             <section className='container'>

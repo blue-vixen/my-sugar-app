@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import './assets/scss/global.scss'
 import { AppHeader } from './cmps/AppHeader';
 import { SugarApp } from './pages/SugarApp';
+import { UserRecords } from './pages/UserRecords';
 import { StatisticsPage } from './pages/StatisticsPage';
 import { RecordEdit } from './pages/RecordEdit';
 import { SigninSignupPage } from './pages/SigninSignupPage';
@@ -44,6 +45,7 @@ class _App extends Component {
               <Route component={RecordEdit} path='/record/edit/:id?' />
               <Route component={StatisticsPage} path='/statistics' />
               <Route component={SigninSignupPage} path='/login' />
+              <Route component={UserRecords} path='/my-records' />
               <Route component={SugarApp} path='/' />
             </Switch>
           </main>
