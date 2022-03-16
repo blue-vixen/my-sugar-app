@@ -6,9 +6,13 @@ export function loadRecords(currentUser) {
     return async (dispatch, getState) => {
         const { filterBy } = getState().recordModule
         try {
-            const q = query(collection(firestore, 'records'), where('userId', '==', 'm9LX6uP8dKN9P4pKQnReNDeBAH43'), orderBy('measuredAt'))
+            let q
+            if (filterBy && filterBy.type !== '') {
+                q = query(collection(firestore, 'records'), where('userId', '==', 'm9LX6uP8dKN9P4pKQnReNDeBAH43'), where('type', '==', filterBy.type), orderBy('measuredAt'))
+            } else {
+                q = query(collection(firestore, 'records'), where('userId', '==', 'm9LX6uP8dKN9P4pKQnReNDeBAH43'), orderBy('measuredAt'))
+            }
             const querySnapshot = await getDocs(q)
-            console.log(querySnapshot)
             const records = querySnapshot.docs.map(doc => {
                 const { level, type, userId, measuredAt } = doc.data();
                 return {
@@ -19,7 +23,6 @@ export function loadRecords(currentUser) {
                     measuredAt
                 }
             })
-            console.log(records)
             dispatch({ type: 'SET_RECORDS', records })
         } catch (err) {
             console.log(err)

@@ -14,9 +14,10 @@ export function _AppHeader({ currentUser }) {
                 </NavLink>
                 <nav>
                     <NavLink activeClassName='my-active' exact to='/'>Home</NavLink>
-                    <NavLink activeClassName='my-active' to='/statistics'>Statistics</NavLink>
+                    {/* <NavLink activeClassName='my-active' to='/statistics'>Statistics</NavLink> */}
+                    <NavLink activeClassName='my-active' to='/my-records'>Records</NavLink>
                     {currentUser ?
-                        <a onClick={() => auth.signOut()}>Sign Out</a> :
+                        <a href='/' onClick={() => auth.signOut()}>Sign Out</a> :
                         <NavLink activeClassName='my-active' to='/login'>Sign in</NavLink>
                     }
                 </nav>

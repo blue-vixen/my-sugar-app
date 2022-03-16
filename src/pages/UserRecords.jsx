@@ -8,7 +8,6 @@ import { loadRecords, setFilterBy, removeRecord } from '../store/actions/recordA
 
 export function UserRecords(props) {
     const { currentUser } = useSelector(state => state.userModule)
-    console.log(currentUser)
     const { records } = useSelector(state => state.recordModule)
     const dispatch = useDispatch()
 
